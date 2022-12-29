@@ -11,9 +11,11 @@ class Solution {
 
         PriorityQueue<int []> minHeap = new PriorityQueue<>((a, b) -> {
             if(a[1] == b[1]){
+                // when processing time is same, we prefer smallest index
                 return map.get(a) - map.get(b);
             }
             else{
+                // when processing time is not same, we prefer smallest processing time
                 return a[1] - b[1];
             }
         });
@@ -28,7 +30,7 @@ class Solution {
             }
             
             if(minHeap.isEmpty()){
-                time = tasks[i][0];
+                time = tasks[i][0]; // fast forward
             }
             else{
                 int [] task = minHeap.poll();
