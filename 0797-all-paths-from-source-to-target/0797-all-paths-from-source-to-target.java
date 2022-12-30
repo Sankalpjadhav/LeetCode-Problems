@@ -26,7 +26,7 @@ class Solution {
 
 /*
 
-    Tried previously:
+    Tried previously: There is no need of visted array as in the question they have mentioned that the graph is directed acyclic graph i.e there wont be any cycle
     
     public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
         List<List<Integer>> result = new ArrayList<>();
