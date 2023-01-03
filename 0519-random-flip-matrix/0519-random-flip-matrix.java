@@ -17,8 +17,8 @@ class Solution {
 
         while(set.contains(s)){
             // generate till you get pair of indices which are not present in set.
-            i=(int)(Math.random()*(m));
-            j=(int)(Math.random()*(n));
+            i=(int)(Math.random()*(m)); // generate random number btw 0 - m-1
+            j=(int)(Math.random()*(n)); // generate random number btw 0 - n-1
             s=i+" "+j;
         }
 
