@@ -14,6 +14,38 @@
  * }
  */
 class Solution {
+    // ITERATIVE METHOD
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> preorder = new ArrayList<>();
+        if(root == null){
+            return preorder;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        
+        while(!stack.isEmpty()){
+            TreeNode curNode = stack.pop();
+            
+            preorder.add(curNode.val);
+            
+            if(curNode.right!=null){
+                stack.add(curNode.right);
+            }
+            
+            if(curNode.left!=null){
+                stack.add(curNode.left);
+            }
+        }
+        
+        return preorder;
+    }
+
+}
+
+
+/*
+RECURSION:
+
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> preorder = new ArrayList<>();
         dfs(root, preorder);
@@ -30,4 +62,4 @@ class Solution {
         dfs(root.right, preorder);
     }
 
-}
+*/
