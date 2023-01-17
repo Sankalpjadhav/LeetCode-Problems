@@ -25,3 +25,10 @@ class Solution {
         return flips;
     }
 }
+/*   |||||||| 
+s = "00011000
+countOfOnes = 0,1,2,
+flips       = 0,1,2,3
+
+return 2
+*/
