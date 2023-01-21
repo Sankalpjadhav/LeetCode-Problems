@@ -1,5 +1,6 @@
 class Solution {
     // In contest tried solving using recursion + Memo but it gave TLE bcoz of constraints 1 <= n <= 10^5
+    // https://www.youtube.com/watch?v=5UU6j1cRQkw
     public long maxScore(int[] nums1, int[] nums2, int k) {
         List<int[]> nums = new ArrayList<>();
         int n = nums1.length;
