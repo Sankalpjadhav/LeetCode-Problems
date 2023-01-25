@@ -5,16 +5,6 @@ class Solution {
         if(edges == null || n == 0) return -1;
         if(node1 == node2) return node1;
         
-        List<List<Integer>> list = new ArrayList<>();
-        
-        for(int i=0; i<n; i++){
-            list.add(new ArrayList<>());
-        }
-        
-        for(int i=0; i<n; i++){
-            list.get(i).add(edges[i]);
-        }
-        
         boolean [] visitedBy1 = new boolean[n];
         boolean [] visitedBy2 = new boolean[n];
        
