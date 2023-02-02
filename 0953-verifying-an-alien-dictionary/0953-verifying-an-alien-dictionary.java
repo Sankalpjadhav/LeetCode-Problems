@@ -12,23 +12,23 @@ class Solution {
             String prevWord = words[i-1];
 
             int j = 0, k = 0;
-            boolean flag = true;
+            boolean flag = false;
             while(j<prevWord.length() && k<currentWord.length()){
                 char ch1 = prevWord.charAt(j);
                 char ch2 = currentWord.charAt(k);
                 if(ch1 != ch2){
+                    flag = true; // We have find out atleast one char which is not equal that means we need not consider the length of prevWord and currentWord
                     if(indexArray[ch1-'a'] > indexArray[ch2-'a']){
                         return false;
                     }
                     else{
-                        flag = false;
                         break;
                     }
                 }    
                 j++;
                 k++;
             }
-            if(flag && prevWord.length() > currentWord.length()){
+            if(!flag && prevWord.length() > currentWord.length()){
                 return false;
             }
         }
