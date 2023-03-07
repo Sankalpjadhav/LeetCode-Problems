@@ -1,7 +1,7 @@
 class Solution {
     public long minimumTime(int[] time, int totalTrips) {
         long lowestTime = 1;
-        long highestTime = (long)1e14;
+        long highestTime = (long)1e14; // Bcoz mintime = totaltrips* time taken to complete one trip and we are appllying the binary search on min time so lowestTime = 1 , highestTime = 1e7 *1e7
         
         while(lowestTime < highestTime){
             long possibleTime = lowestTime + (highestTime - lowestTime)/2;
