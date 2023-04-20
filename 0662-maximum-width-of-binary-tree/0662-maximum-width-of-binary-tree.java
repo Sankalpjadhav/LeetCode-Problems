@@ -20,27 +20,31 @@ class Solution {
         queue.add(new Pair(root, 0));
         
         while(!queue.isEmpty()){
-            int size = queue.size();
-            int minimumIndexAtThatLevel = queue.peek().getValue();
-            int first = 0, last = 0;
-            for(int i=0;i<size;i++){
-                int currentIndex = queue.peek().getValue() - minimumIndexAtThatLevel;
+            int queueSize = queue.size();
+            int minIndexAtThatLevel = queue.peek().getValue();
+            int firstIndex = 0, lastIndex = 0;
+            for(int i=0;i<queueSize;i++){
+                int currentIndex = queue.peek().getValue() - minIndexAtThatLevel;
                 TreeNode currentNode = queue.peek().getKey();
                 queue.poll();
                 if(i == 0){
-                    first = currentIndex;
+                    firstIndex = currentIndex;
                 }
-                if(i == size-1){
-                    last = currentIndex;
+                
+                if(i == queueSize - 1){
+                    lastIndex = currentIndex;
                 }
+                
                 if(currentNode.left != null){
-                    queue.add(new Pair(currentNode.left, 2*currentIndex+1));
+                    queue.add(new Pair(currentNode.left, 2 * currentIndex + 1));
                 }
+                
                 if(currentNode.right != null){
-                    queue.add(new Pair(currentNode.right, 2*currentIndex+2));
+                    queue.add(new Pair(currentNode.right, 2 * currentIndex + 2));
                 }
             }
-            width = Math.max(width, last - first + 1);
+            
+            width = Math.max(width, lastIndex - firstIndex + 1);
         }
         
         return width;
