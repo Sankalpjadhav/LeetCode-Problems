@@ -1,7 +1,7 @@
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
         HashMap<Integer, Integer> freqMap = new HashMap<>();
-        PriorityQueue<Pair> pq = new PriorityQueue<>(new PrivateComparator());
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b)-> b.freq - a.freq);
         
         for(int num: nums){
             if(freqMap.containsKey(num)){
@@ -34,12 +34,5 @@ class Pair{
     public Pair(Integer element, Integer freq){
         this.element = element;
         this.freq = freq;
-    }
-}
-
-class PrivateComparator implements Comparator<Pair>{
-    @Override
-    public int compare(Pair p1, Pair p2){
-        return p2.freq - p1.freq;
     }
 }
