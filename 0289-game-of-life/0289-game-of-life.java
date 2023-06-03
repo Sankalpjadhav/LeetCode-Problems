@@ -10,14 +10,19 @@ class Solution {
         if 0 becomes 1 -> then use intermediate state value as 3
         if 1 becomes 0 -> then use intermediate state value as -3
         
+        NOTE: You can use any intermediate state value aprat from 0 & 1.
+        
         Then at the end, update the value from 3 to 1 and -3 to 0.
         */
         int m = board.length;
         int n = board[0].length;
         
+        int [][] directions = {{-1,0}, {-1,-1}, {0, -1}, {1, -1}, {1, 0}, {1,1}, {0, 1}, {-1, 1}};
+        
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
-                int numberOfLivesNeighbours = calculateLiveNeighbours(i, j, board);
+                int numberOfLivesNeighbours = calculateLiveNeighbours(i, j, board, directions);
+                
                 //System.out.println("("+i+", "+j+") = "+ numberOfLivesNeighbours);
                 
                 if(board[i][j] == 1 || board[i][j] == -3){
@@ -53,39 +58,20 @@ class Solution {
         }
     }
     
-    private int calculateLiveNeighbours(int i, int j, int [][] board){
+    private int calculateLiveNeighbours(int i, int j, int [][] board, int [][] directions){
         int count = 0;
         
-        if(i-1 >= 0 && (board[i-1][j] == 1 || board[i-1][j] == -3)){
-            count++;
-        }
-        
-        if(i-1 >= 0 && j-1 >= 0 && (board[i-1][j-1] == 1 || board[i-1][j-1] == -3)){
-            count++;
-        }
-        
-        if(j-1 >= 0 && (board[i][j-1] == 1 || board[i][j-1] == -3)){
-            count++;
-        }
-        
-        if(i+1 < board.length && j-1 >= 0 && (board[i+1][j-1] == 1 || board[i+1][j-1] == -3)){
-            count++;
-        }
-        
-        if(i+1 < board.length && (board[i+1][j] == 1 || board[i+1][j] == -3)){
-            count++;
-        }
-        
-        if(i+1 < board.length && j+1 < board[0].length && (board[i+1][j+1] == 1 || board[i+1][j+1] == -3)){
-            count++;
-        }
-        
-        if(j+1 < board[0].length && (board[i][j+1] == 1 || board[i][j+1] == -3)){
-            count++;
-        }
-        
-        if(i-1 >= 0 && j+1 < board[0].length && (board[i-1][j+1] == 1 || board[i-1][j+1] == -3)){
-            count++;
+        for(int k=0;k<directions.length;k++){
+            int newX = i + directions[k][0];
+            int newY = j + directions[k][1];
+            
+            if(newX < 0 || newY < 0 || newX >= board.length || newY >= board[0].length){
+                continue;
+            }
+            
+            if(board[newX][newY] == 1 || board[newX][newY] == -3){
+                count++;
+            }
         }
         
         return count;
