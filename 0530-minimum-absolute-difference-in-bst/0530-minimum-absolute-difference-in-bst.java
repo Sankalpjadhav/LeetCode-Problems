@@ -14,28 +14,24 @@
  * }
  */
 class Solution {
+    private int prevNode;
+    private int min;
+    
     public int getMinimumDifference(TreeNode root) {
-        List<Integer> values = new ArrayList<>();
-        inorderTraversal(root, values);
-        
-        //System.out.println(values);
-        
-        int min = Integer.MAX_VALUE;
-        
-        for(int i=0;i<values.size()-1;i++){
-            min = Math.min(min, values.get(i+1) - values.get(i));
-        }
-        
+        prevNode = (int) 1e6;
+        min = Integer.MAX_VALUE;
+        inorderTraversal(root); 
         return min;
     }
     
-    private void inorderTraversal(TreeNode root, List<Integer> values){
+    private void inorderTraversal(TreeNode root){
         if(root == null){
             return;
         }
         
-        inorderTraversal(root.left, values);
-        values.add(root.val);
-        inorderTraversal(root.right, values);
+        inorderTraversal(root.left);
+        min = Math.min(min, Math.abs(prevNode - root.val));
+        prevNode = root.val;
+        inorderTraversal(root.right);
     }
 }
