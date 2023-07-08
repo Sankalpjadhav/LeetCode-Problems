@@ -1,23 +1,25 @@
 class Solution {
     public int longestSubarray(int[] nums) {
+        int maxConsecutiveOnes = 0;
+        int i = 0, j = 0;
         int n = nums.length;
-        int numberOfZeros = 0;
-        int ans = 0;
-        int j = 0, i = 0;
+        int countOfZeros = 0;
         while(j < n){
             if(nums[j] == 0){
-                numberOfZeros++;
+                countOfZeros++;
             }
-            if(numberOfZeros > 1){
-                while(nums[i++]!=0){
-                    //System.out.println("i -> "+i);
+            if(countOfZeros > 1){
+                while(nums[i] != 0){
+                    i++;
                 }
-                numberOfZeros--;
+                i++;
+                countOfZeros--;
             }
-            ans = Math.max(ans, j-i);
+            
+            maxConsecutiveOnes = Math.max(maxConsecutiveOnes, j - i);
             j++;
         }
         
-        return ans;
+        return maxConsecutiveOnes;
     }
 }
