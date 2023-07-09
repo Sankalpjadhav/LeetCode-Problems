@@ -1,11 +1,9 @@
 class Solution {
     public String predictPartyVictory(String senate) {
-        int n = senate.length();
-        
         Queue<Integer> queue1 = new LinkedList<>();
         Queue<Integer> queue2 = new LinkedList<>();
-        
-        for(int i=0;i<senate.length();i++){
+        int n = senate.length();
+        for(int i=0;i<n;i++){
             if(senate.charAt(i) == 'R'){
                 queue1.add(i);
             }
