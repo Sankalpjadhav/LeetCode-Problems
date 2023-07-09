@@ -15,34 +15,34 @@
  */
 class Solution {
     public int longestZigZag(TreeNode root) {
-        int [] longestZigZagPath = {0};
+        if(root == null){
+            return 0;
+        }
         
-        int direction = 1;
+        int [] longestZigZagPath = {0};
         /*
         1 represents right
         0 represents left
         */
-        
-        helper(root.left, direction, 1, longestZigZagPath);
-        helper(root.right, 1 - direction, 1, longestZigZagPath);
-        
+        preorderTraversal(root.left, 1, 1, longestZigZagPath);
+        preorderTraversal(root.right, 1, 0, longestZigZagPath);
         return longestZigZagPath[0];
     }
     
-    private void helper(TreeNode root, int direction, int count, int [] longestZigZagPath){
+    private void preorderTraversal(TreeNode root, int count, int direction, int [] longestZigZagPath){
         if(root == null){
             return;
         }
         
         longestZigZagPath[0] = Math.max(longestZigZagPath[0], count);
         
-        if(direction == 0){
-            helper(root.left, 1 - direction, count+1, longestZigZagPath);
-            helper(root.right, direction, 1, longestZigZagPath);
+        if(direction  == 0){
+            preorderTraversal(root.left, count+1, 1 - direction, longestZigZagPath);
+            preorderTraversal(root.right, 1, direction, longestZigZagPath);
         }
         else{
-            helper(root.right, 1 - direction, count+1, longestZigZagPath);
-            helper(root.left, direction, 1, longestZigZagPath);
+            preorderTraversal(root.right, count+1, 1 - direction, longestZigZagPath);
+            preorderTraversal(root.left, 1, direction, longestZigZagPath);
         }
     }
 }
