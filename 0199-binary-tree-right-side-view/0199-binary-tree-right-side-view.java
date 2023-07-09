@@ -15,23 +15,23 @@
  */
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> rightSideViewNodes = new ArrayList<>();
-        if(root == null){
-            return rightSideViewNodes;
-        }
-        dfs(root, 0, rightSideViewNodes);
-        return rightSideViewNodes;
+        List<Integer> result = new ArrayList<>();
+        
+        reversePreorderTraversal(root, 0, result);
+        
+        return result;
     }
     
-    private void dfs(TreeNode root, int level, List<Integer> rightSideViewNodes){
+    private void reversePreorderTraversal(TreeNode root, int level, List<Integer> result){
         if(root == null){
             return;
         }
         
-        if(level == rightSideViewNodes.size()){
-            rightSideViewNodes.add(root.val);
+        if(level == result.size()){
+            result.add(root.val);
         }
-        dfs(root.right, level+1, rightSideViewNodes);
-        dfs(root.left, level+1, rightSideViewNodes);
+        
+        reversePreorderTraversal(root.right, level+1, result);
+        reversePreorderTraversal(root.left, level+1, result);
     }
 }
