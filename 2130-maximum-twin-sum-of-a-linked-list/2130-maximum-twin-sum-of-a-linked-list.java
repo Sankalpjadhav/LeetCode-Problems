@@ -10,46 +10,44 @@
  */
 class Solution {
     public int pairSum(ListNode head) {
-        int length = 0;
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        slow.next = reverseLinkedList(slow.next);
+        slow = slow.next;
         ListNode ptr = head;
-        
-        while(ptr!=null){
-            length++;
-            ptr = ptr.next;
-        }
-        
-        ListNode nextPtr = head;
-        
-        for(int i=1;i<=length/2-1;i++){
-            nextPtr = nextPtr.next;
-        }
-        
-        nextPtr.next = reverseLL(nextPtr.next);
-        
-        nextPtr = nextPtr.next;
-        ptr = head;
-        
         int maxTwinSum = 0;
-        while(nextPtr!=null){
-            maxTwinSum = Math.max(maxTwinSum, ptr.val + nextPtr.val);
-            nextPtr = nextPtr.next;
+        while(slow != null){
+            maxTwinSum = Math.max(maxTwinSum, ptr.val + slow.val);
             ptr = ptr.next;
+            slow = slow.next;
         }
         
         return maxTwinSum;
     }
     
-    private ListNode reverseLL(ListNode head){
-        ListNode currentPtr = head;
+    private ListNode reverseLinkedList(ListNode head){
         ListNode prev = null;
+        ListNode next = null;
         
-        while(currentPtr!=null){
-            ListNode next = currentPtr.next;
-            currentPtr.next = prev;
-            prev = currentPtr;
-            currentPtr = next;
+        while(head!=null){
+            next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
         }
         
         return prev;
     }
 }
+
+/*
+            f
+      s
+1 2 3 4 5 6 7 8
+*/
