@@ -10,9 +10,38 @@
  */
 class Solution {
     public ListNode deleteMiddle(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode slow = dummy;
+        ListNode fast = dummy;
+        
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        slow.next = slow.next.next;
+        
+        return dummy.next;
+    }
+}
+
+/*
+            f
+      s
+  0 1 2 3 4 5 6
+
+            f
+      s
+  0 1 2 3 4 5
+*/
+
+/*
+Time complexity: O(2n)
+public ListNode deleteMiddle(ListNode head) {
         int length = 0;
         length = findLength(head);
-        System.out.println(length);
+        //System.out.println(length);
         if(length == 1){
             return null;
         }
@@ -39,4 +68,4 @@ class Solution {
         
         return length;
     }
-}
+*/
