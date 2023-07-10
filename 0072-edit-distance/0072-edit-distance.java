@@ -1,35 +1,28 @@
 class Solution {
     public int minDistance(String word1, String word2) {
-        if(word1.length() == 0){
-            return word2.length();
-        }
-        if(word2.length() == 0){
-            return word1.length();
-        }
+        int m = word1.length();
+        int n = word2.length();
         
-        int n1 = word1.length()-1;
-        int n2 = word2.length()-1;
+        int [][] memo = new int[m][n];
         
-        int [][] memo = new int[n1+1][n2+1];
-        
-        for(int i=0;i<memo.length;i++){
+        for(int i=0;i<m;i++){
             Arrays.fill(memo[i], -1);
         }
         
-        return helper(n1, n2, word1, word2, memo);
+        return calculateMinOperations(m-1, n-1, word1, word2, memo);
     }
     
-    private int helper(int index1, int index2, String word1, String word2, int [][] memo){
-        if(index1 == -1 && index2 == -1){
+    private int calculateMinOperations(int index1, int index2, String word1, String word2, int [][] memo){
+        if(index1 < 0 && index2 >=0){
+            return index2+1; // We need to add remaining word2 chars
+        }
+        
+        if(index2 < 0 && index1 >=0){
+            return index1+1; // We need to delete rest of chars of word1
+        }
+        
+        if(index1 < 0 && index2 < 0){
             return 0;
-        }
-        
-        if(index1 < 0){
-            return index2 + 1;
-        }
-        
-        if(index2 < 0){
-            return index1 + 1;
         }
         
         if(memo[index1][index2] != -1){
@@ -37,69 +30,15 @@ class Solution {
         }
         
         if(word1.charAt(index1) == word2.charAt(index2)){
-            return memo[index1][index2] = 0 + helper(index1-1, index2-1, word1, word2, memo);
+            return 0 + calculateMinOperations(index1-1, index2-1, word1, word2, memo);
         }
         else{
-            // Inserting character
-            int insertOperation = 1 + helper(index1, index2-1, word1, word2, memo);
+            // Every operation we perform on word1
+            int addOperation = 1 + calculateMinOperations(index1, index2-1, word1, word2, memo);
+            int deleteOperation = 1 + calculateMinOperations(index1-1, index2, word1, word2, memo);
+            int updateOperation = 1 + calculateMinOperations(index1-1, index2-1, word1, word2, memo);
             
-            // Replace character
-            int replaceOperation = 1 + helper(index1-1, index2-1, word1, word2, memo);
-            
-            // Delete character
-            int deleteOperation = 1 + helper(index1-1, index2, word1, word2, memo);
-            
-            return memo[index1][index2] = Math.min(insertOperation, Math.min(replaceOperation, deleteOperation));
+            return memo[index1][index2] = Math.min(addOperation, Math.min(deleteOperation, updateOperation));
         }
     }
 }
-
-
-/*
-Obviously Recursion solution will give TLE since it is exponential
-
-    public int minDistance(String word1, String word2) {
-        if(word1.length() == 0){
-            return word2.length();
-        }
-        if(word2.length() == 0){
-            return word1.length();
-        }
-        
-        int n1 = word1.length()-1;
-        int n2 = word2.length()-1;
-        
-        return helper(n1, n2, word1, word2);
-    }
-    
-    private int helper(int index1, int index2, String word1, String word2){
-        if(index1 == -1 && index2 == -1){
-            return 0;
-        }
-        
-        if(index1 < 0){
-            return index2 + 1;
-        }
-        
-        if(index2 < 0){
-            return index1 + 1;
-        }
-        
-        if(word1.charAt(index1) == word2.charAt(index2)){
-            return helper(index1-1, index2-1, word1, word2);
-        }
-        else{
-            // Inserting character
-            int insertOperation = 1 + helper(index1, index2-1, word1, word2);
-            
-            // Replace character
-            int replaceOperation = 1 + helper(index1-1, index2-1, word1, word2);
-            
-            // Delete character
-            int deleteOperation = 1 + helper(index1-1, index2, word1, word2);
-            
-            return Math.min(insertOperation, Math.min(replaceOperation, deleteOperation));
-        }
-    }
-
-*/
