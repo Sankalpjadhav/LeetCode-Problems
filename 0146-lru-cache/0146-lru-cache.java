@@ -1,48 +1,35 @@
 class LRUCache {
+    
     class Node{
         Node prev, next;
         int key, value;
-        public Node(int _key, int _value){
-            key = _key;
-            value = _value;
+        public Node(int key, int value){
+            this.key = key;
+            this.value = value;
         }
     }
     
-    Node head, tail;
+    final private int MAX_CAPACITY;
     HashMap<Integer, Node> map;
-    private final int maxCapacity;
+    Node head, tail;
     
     public LRUCache(int capacity) {
-        head = new Node(0, 0);
-        tail = new Node(0, 0);
+        this.MAX_CAPACITY = capacity;
+        map = new HashMap<>();
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
         head.next = tail;
         tail.prev = head;
-        map = new HashMap<>();
-        maxCapacity = capacity;
     }
     
     public int get(int key) {
-        if(map.containsKey(key)){
-            Node node = map.get(key);
-            remove(node);
-            insert(node);
-            return node.value;
-        }
-        else{
+        if(!map.containsKey(key)){
             return -1;
         }
-    }
-    
-    public void put(int key, int value) {
-        if(map.containsKey(key)){
-            remove(map.get(key));    
-        }
-        
-        if(map.size() == maxCapacity){
-            remove(tail.prev);
-        }
-        
-        insert(new Node(key, value));
+        Node node = map.get(key);
+        remove(node);
+        insert(node);
+        return node.value;
     }
     
     private void remove(Node node){
@@ -58,6 +45,20 @@ class LRUCache {
         node.next = headNext;
         node.prev = head;
         headNext.prev = node;
+    }
+    
+    public void put(int key, int value) {
+        if(map.containsKey(key)){
+            remove(map.get(key));
+            insert(new Node(key, value));
+            return;
+        }
+        
+        if(map.size() == MAX_CAPACITY){
+            remove(tail.prev);
+        }
+        
+        insert(new Node(key, value));
     }
 }
 
