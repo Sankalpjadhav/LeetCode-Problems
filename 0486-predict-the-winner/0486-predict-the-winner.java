@@ -1,7 +1,13 @@
 class Solution {
     public boolean PredictTheWinner(int[] nums) {
         int n = nums.length;
-        int firstPlayerScore = calculateScore(0, n-1, nums);
+        int [][] memo = new int[n][n];
+        
+        for(int i=0;i<n;i++){
+            Arrays.fill(memo[i], -1);
+        }
+        
+        int firstPlayerScore = calculateScore(0, n-1, nums, memo);
         int totalScore = 0;
         for(int score: nums){
             totalScore += score;
@@ -9,7 +15,7 @@ class Solution {
         return firstPlayerScore >= totalScore - firstPlayerScore; 
     }
     
-    private int calculateScore(int i, int j, int [] nums){
+    private int calculateScore(int i, int j, int [] nums, int [][] memo){
         if(i > j){
             return 0;
         }
@@ -19,12 +25,16 @@ class Solution {
             return nums[i];
         }
         
+        if(memo[i][j] != -1){
+            return memo[i][j];
+        }
+        
         int currentScore = Math.max(
-                        nums[i] + Math.min(calculateScore(i+2, j, nums), calculateScore(i+1, j-1, nums)),
-                        nums[j] + Math.min(calculateScore(i+1, j-1, nums), calculateScore(i, j-2, nums))
+                        nums[i] + Math.min(calculateScore(i+2, j, nums, memo), calculateScore(i+1, j-1, nums, memo)),
+                        nums[j] + Math.min(calculateScore(i+1, j-1, nums, memo), calculateScore(i, j-2, nums, memo))
         );
         
-        return currentScore;
+        return memo[i][j] = currentScore;
     }
 }
 
