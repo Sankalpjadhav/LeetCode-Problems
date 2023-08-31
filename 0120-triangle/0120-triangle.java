@@ -3,23 +3,21 @@ class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
         int m = triangle.size();
         int n = triangle.get(m-1).size();
-        int [][] memo = new int [m][n];
-        for(int i=0;i<m;i++){
-            Arrays.fill(memo[i], -1);
+        int [] next = new int[n];
+        for(int j=0;j<n;j++){
+            next[j] = triangle.get(m-1).get(j);
         }
-        return minTopDown(triangle, 0, 0, triangle.get(0).get(0), memo);
-    }
+        for(int i=m-2;i>=0;i--){
+            int [] curr = new int[n];
+            for(int j=i;j>=0;j--){
+                 int down = triangle.get(i).get(j) + next[j];
+                 int diagonal = triangle.get(i).get(j) + next[j+1];
 
-    public int minTopDown(List<List<Integer>> triangle, int row, int col, int sum, int [][] memo){
-        if(row == triangle.size()-1){
-            return triangle.get(row).get(col);
+                 curr[j] = Math.min(down, diagonal);
+            }
+            next = curr;
         }
-        if(memo[row][col] != -1){
-            return memo[row][col];
-        }
-        int rowMin = Math.min(minTopDown(triangle, row+1, col, triangle.get(row+1).get(col), memo), minTopDown(triangle, row+1, col+1, triangle.get(row+1).get(col+1), memo));
-        
-        return memo[row][col] = sum + rowMin;
+        return next[0];
     }
     
 }
