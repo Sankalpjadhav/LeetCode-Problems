@@ -58,7 +58,7 @@ class Solution {
 
 
 /*
-My written code: 38/43 cases passed
+My previous written code: 38/43 cases passed
 
 class Solution {
     public ListNode[] splitListToParts(ListNode root, int k) {
