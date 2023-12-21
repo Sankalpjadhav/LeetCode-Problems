@@ -1,25 +1,20 @@
 class Solution {
     public int longestOnes(int[] nums, int k) {
-        int maxConsecutiveOnes = 0;
-        int i = -1, j = 0;
-        int n = nums.length, count = 0;
+        int i = 0, j = 0;
         
-        while(j < n){
+        while(j < nums.length){
             if(nums[j] == 0){
-                count++;
+                k--;
             }
-            
-            while(count > k){
-                i++;
+            if(k < 0){
                 if(nums[i] == 0){
-                    count--;
+                    k++;
                 }
+                i++;
             }
-            
-            maxConsecutiveOnes = Math.max(maxConsecutiveOnes, j - i);
             j++;
         }
         
-        return maxConsecutiveOnes;
+        return j-i;
     }
 }
