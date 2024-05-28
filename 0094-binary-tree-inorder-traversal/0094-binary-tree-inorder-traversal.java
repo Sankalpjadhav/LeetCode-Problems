@@ -14,40 +14,33 @@
  * }
  */
 class Solution {
-    // Using Morris Traversal
     public List<Integer> inorderTraversal(TreeNode root) {
+        // Using Morris Traversal
         List<Integer> inorder = new ArrayList<>();
-        morrisTraversal(root, inorder);
-        return inorder;
-    }
-    
-    private void morrisTraversal(TreeNode root, List<Integer> inorder){
-        TreeNode currentNode = root;
+        TreeNode curr = root;
         
-        while(currentNode != null){
-            if(currentNode.left == null){
-                inorder.add(currentNode.val);
-                currentNode = currentNode.right;
+        while(curr != null){
+            if(curr.left == null){
+                inorder.add(curr.val);
+                curr = curr.right;
             }
             else{
-                TreeNode previousNode = currentNode.left;
-                
-                while(previousNode.right!=null && previousNode.right!=currentNode){
-                    previousNode = previousNode.right;
+                TreeNode prev = curr.left;
+                while(prev.right != null && prev.right != curr){
+                    prev = prev.right;
                 }
-                
-                if(previousNode.right == null){
-                    previousNode.right = currentNode;
-                    currentNode = currentNode.left;
+                if(prev.right == null){
+                    prev.right = curr;
+                    curr = curr.left;
                 }
                 else{
-                    // previousNode.right == currentNode
-                    previousNode.right = null;
-                    inorder.add(currentNode.val);
-                    currentNode = currentNode.right;
+                    prev.right = null;
+                    inorder.add(curr.val);
+                    curr = curr.right;
                 }
             }
         }
-    
+        
+        return inorder;
     }
 }
